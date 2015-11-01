@@ -9,7 +9,7 @@ class Cache::LRU {
 
     method set($key, $value) {
         if %._entries{$key}:exists {
-            $._entries{$key}:delete;
+            %._entries{$key}:delete;
         }
 
         %._entries{$key} = $value;
@@ -41,7 +41,6 @@ class Cache::LRU {
                     if %need{$fifo_entry.()[0]}:delete;
             }
             @._fifo = @new_fifo;
-            say "RESET fifo\n";
         }
     }
 
