@@ -8,6 +8,10 @@ class Cache::LRU {
     sub GC_FACTOR { 10 }
 
     method set($key, $value) {
+        if %._entries{$key}:exists {
+            $._entries{$key}:delete;
+        }
+
         %._entries{$key} = $value;
         self._update_fifo($key, $value);
 
