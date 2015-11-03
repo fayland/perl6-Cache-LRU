@@ -19,6 +19,7 @@ $cache.set('a', Foo.new());
 is $Foo::cnt, 1;
 
 diag "broken test, FIXME";
+done-testing;
 exit;
 
 $cache.set('a', 2);
