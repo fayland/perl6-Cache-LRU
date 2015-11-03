@@ -7,7 +7,7 @@ class Cache::LRU {
 
     sub GC_FACTOR { 10 }
 
-    method set($key, $value) {
+    method set($key, $value is copy) {
         if %._entries{$key}:exists {
             %._entries{$key}:delete;
         }
@@ -25,7 +25,7 @@ class Cache::LRU {
         $value;
     }
 
-    method _update_fifo($key, $value) {
+    method _update_fifo($key, $value is copy) {
         # precondition: %._entries should contain given key
         @._fifo.push( ($key, $value) );
 
