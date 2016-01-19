@@ -45,16 +45,8 @@ class Cache::LRU {
         @!fifo.push( ($key, $entry) );
 
         if @!fifo.elems >= $.size * GC_FACTOR {
-            my %need;
-            for %!entries.keys -> $k {
-                %need{$k} = 1;
-            }
-            my @new_fifo = gather while (%need.elems) {
-                my $fifo_entry = @!fifo.shift;
-                take $fifo_entry
-                    if %need{$fifo_entry.[0]}:delete;
-            }
-            @!fifo = @new_fifo;
+            my %need = %!entries.keys X=> 1;
+            @!fifo .= grep( { %need{$_.[0]}:delete } );
         }
     }
 
