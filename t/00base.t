@@ -46,5 +46,13 @@ $cache.clear;
 ok ! defined $cache.get('c');
 ok ! defined $cache.get('e');
 
+# Supports associative operations
+is ( $cache< a b c > = 1, 2, 3 ), ( 1, 2, 3);
+ok $cache<a>:exists;
+is $cache<a>, 1;
+is ++$cache<b>, 3;
+is $cache<c>:delete, 3;
+ok $cache<c>:!exists;
+
 done-testing;
 
