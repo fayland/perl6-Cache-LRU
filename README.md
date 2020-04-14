@@ -10,10 +10,12 @@ use Cache::LRU;
 my $cache = Cache::LRU.new(size => 1024);
 
 $cache.set($key, $value);
+# Or $cache{$key} = $value
 
 my $value = $cache.get($key);
 
 my $removed_value = $cache.remove($key);
+# Or $cache{$key}:delete
 
 ```
 
@@ -21,6 +23,9 @@ my $removed_value = $cache.remove($key);
 
 Cache::LRU is a simple, fast implementation of an in-memory LRU cache in
 pure perl.
+
+This class implements the associative interface, so in most cases it can
+be used as a regular Hash.
 
 ## FUNCTIONS
 
@@ -33,7 +38,7 @@ size is default 1024.
 ### $cache.get($key)
 Returns the cached object if exists, or undef otherwise.
 
-### $cache.set($key => $value)
+### $cache.set($key, $value)
 Stores the given key-value pair.
 
 ### $cache.remove($key)

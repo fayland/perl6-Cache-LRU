@@ -69,4 +69,18 @@ class Cache::LRU {
         %!entries = ();
         @!fifo = ();
     }
+
+    # Associative role methods
+
+    multi method AT-KEY (::?CLASS:D: $key) is rw {
+        my $cache = self;
+        Proxy.new(
+            FETCH => method () { $cache.get($key) },
+            STORE => method ($value) { $cache.set( $key, $value ) },
+        );
+    }
+
+    multi method EXISTS-KEY (::?CLASS:D: $key) { %!entries{$key}:exists }
+
+    multi method DELETE-KEY (::?CLASS:D: $key) { $.remove($key) }
 }
